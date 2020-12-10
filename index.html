@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>四叉树碰撞检测</title>
+
+    <script src="quatTree.js"></script>
+
+    <style>
+        /* #img {
+            width: 50px;
+            height: 50px;
+        } */
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+    <!-- <img src="item.png" alt="" id="img"> -->
+    <canvas class="gameCanvas" id="myCanvas" width="500px" ; height="500px" ;
+        style="border: 1px solid black; display: block; margin: 0 auto;">
+        你的浏览器不支持canvas标签
+    </canvas>
+    <button onclick="close()">暂停</button>
+
+
+
+    <script>
+
+        let quatTree = new QuatTree(0, 0, 500, 500, 5);
+
+
+        let playing = true;
+
+
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+
+        canvas.onmousedown = function (e) {
+
+            let rect = ctx.rect(e.layerX - 50, e.layerY - 50, 100, 100);
+
+            ctx.strokeStyle = "#green";
+
+            ctx.stroke();
+
+
+        }
+
+
+        canvas.onmouseup = function (e) {
+
+            let rect = ctx.rect(e.layerX - 50, e.layerY - 50, 100, 100);
+
+            ctx.strokeStyle = "#green";
+
+            ctx.stroke();
+
+
+        }
+
+        function createItems() {
+
+            let x = Math.floor(Math.random() * 490);
+            let y = Math.floor(Math.random() * 490);
+
+            let fillStyle = `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},1)`;
+            ctx.fillStyle = fillStyle;
+            ctx.fillRect(x, y, 5, 5);
+
+            quatTree.addChild(x, y);
+
+            // if (quatTree.root.nodes.length > 0 && quatTree.root.childs.length > 0) {
+            //     debugger;
+            // }
+
+
+        }
+
+
+        let s = new Date().getTime();
+
+        function render() {
+            if (new Date().getTime() - s > 100) {
+                createItems();
+                s = new Date().getTime();
+            }
+
+            // console.log(new Date().getTime());
+            if (playing) {
+                requestAnimationFrame(render);
+            }
+        }
+
+
+        requestAnimationFrame(render);
+
+
+        function close() {
+
+            playing = false;
+
+        }
+
+
+
+
+    </script>
+</body>
+
+
+
+</html>
